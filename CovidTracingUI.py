@@ -37,7 +37,6 @@ class UI:
         data : List[dict]
             A list of dictionaries containing user data.
         '''
-        data = convert_data_to_array(data)
         table = Table(self.__frame, data)
 
         # for idx, user in enumerate(data):
