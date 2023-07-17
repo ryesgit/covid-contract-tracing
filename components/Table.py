@@ -35,4 +35,4 @@ class Table:
         for row, user in enumerate(self.__data):
             for column in range(len(self.__headers)):
                 label = ttk.Label(self.__table_frame, padding=5); label.grid(row=row+1, column=column)
-                label["text"] = self.__data[user][self.__headers[column]]
+                label["text"] = self.__data.get(user, '').get(self.__headers[column], '')
