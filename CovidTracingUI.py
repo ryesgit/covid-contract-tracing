@@ -13,6 +13,9 @@ class UI:
         user_data = read_json('contacts.json')
         self.__display_user_data(user_data)
 
+        add_contact_button = ttk.Button(self.__frame, text="Add Contact", command=self.show_form_window)
+        add_contact_button.grid(row=self.__frame.grid_size()[1], column=0, columnspan=2, sticky="W E")
+
         self.__master.mainloop()
 
     def __display_headers(self, *args):
@@ -35,6 +38,15 @@ class UI:
             label['text'] = data[user]['name']
             label = ttk.Label(self.__frame, padding=5); label.grid(row=idx+1, column=1)
             label['text'] = data[user]['age']
+
+    def show_form_window(self):
+        '''
+        Create a new window for the contact tracing form.
+        '''
+        self.__form_window = Toplevel(self.__master)
+        self.__form_window.title("Contact Tracing Form")
+        welcome = ttk.Label(self.__form_window, padding=5); welcome.grid(row=0, column=0)
+        welcome['text'] = "Welcome to the Contact Tracing Form!"
 
 def read_json(path):
     '''
