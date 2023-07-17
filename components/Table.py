@@ -47,3 +47,6 @@ class Table:
             for column, column_value in enumerate(row_value):
                 label = ttk.Label(self.__table_frame, padding=5); label.grid(row=row+1, column=column)
                 label["text"] = column_value
+
+    def _get_table_frame(self):
+        return self.__table_frame
