@@ -16,6 +16,9 @@ class UI:
         add_contact_button = ttk.Button(self.__frame, text="Add Contact", command=self.show_form_window)
         add_contact_button.grid(row=self.__frame.grid_size()[1], column=0, columnspan=2, sticky="W E")
 
+        # Center the window
+        center_window(self.__master)
+
         self.__master.mainloop()
 
     def __display_headers(self, *args):
@@ -45,8 +48,13 @@ class UI:
         '''
         self.__form_window = Toplevel(self.__master)
         self.__form_window.title("Contact Tracing Form")
+
         welcome = ttk.Label(self.__form_window, padding=5); welcome.grid(row=0, column=0)
         welcome['text'] = "Welcome to the Contact Tracing Form!"
+
+        # Center this window
+        center_window(self.__form_window)
+
 
 def read_json(path):
     '''
@@ -56,3 +64,17 @@ def read_json(path):
     with open(path, 'r') as f:
         data = json.load(f)
     return data
+
+def center_window(window: Tk | Toplevel):
+        '''
+        Parameters
+        ----------
+        window : Tk | Toplevel
+            The window to center.
+        '''
+        window.update_idletasks()
+        width = window.winfo_width()
+        height = window.winfo_height()
+        x = (window.winfo_screenwidth() // 2) - (width // 2)
+        y = (window.winfo_screenheight() // 2) - (height // 2)
+        window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
