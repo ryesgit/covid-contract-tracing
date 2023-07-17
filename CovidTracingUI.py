@@ -48,14 +48,11 @@ class UI:
         '''
         Create a new window for the contact tracing form.
         '''
-        self.__form_window = Toplevel(self.__master)
-        self.__form_window.title("Contact Tracing Form")
-
-        welcome = ttk.Label(self.__form_window, padding=5); welcome.grid(row=0, column=0)
-        welcome['text'] = "Welcome to the Contact Tracing Form!"
+        from components.ContactsForm import ContactsForm
+        contacts_form = ContactsForm(self.__master)
 
         # Center this window
-        center_window(self.__form_window)
+        center_window(contacts_form.get_window())
 
 def center_window(window: Tk | Toplevel):
         '''
