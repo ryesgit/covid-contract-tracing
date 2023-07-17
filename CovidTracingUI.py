@@ -4,6 +4,7 @@ from tkinter import ttk
 from typing import List
 from ContactsIO import ContactsIO
 from components.Table import Table
+from utils.user_data_helpers import convert_data_to_array
 
 class UI:
     def __init__(self) -> None:
@@ -36,6 +37,7 @@ class UI:
         data : List[dict]
             A list of dictionaries containing user data.
         '''
+        data = convert_data_to_array(data)
         table = Table(self.__frame, data)
 
         # for idx, user in enumerate(data):
