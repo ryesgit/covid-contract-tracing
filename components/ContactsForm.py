@@ -40,5 +40,6 @@ class ContactsForm:
         entry_types = [Entry, partial(ttk.Spinbox, from_=0, to=100), Entry, \
                       vaccination_combobox, diagnosis_radiobuttons]
         
-        headers = [["Name", "Age", "Address","Vaccination Status", "Have you been in contact\nwith someone diagnosed with COVID?"], entry_types]
-        EntryTable(self.__form_window, headers)
+
+        headers = ["Name", "Age", "Address","Vaccination Status", "Have you been in contact\nwith someone diagnosed with COVID?"]
+        EntryTable(self.__form_window, headers, entry_types)

@@ -45,8 +45,9 @@ class Table:
         '''
         for row, row_value in enumerate(content):
             for column, column_value in enumerate(row_value):
-                label = ttk.Label(self.__table_frame, padding=5); label.grid(row=row+1, column=column)
+                label = ttk.Label(self.__table_frame, padding=5, anchor=CENTER); label.grid(row=row+1, column=column)
                 label["text"] = column_value
+                label.configure(anchor="center")
 
     def _get_table_frame(self):
         return self.__table_frame
