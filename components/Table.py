@@ -20,13 +20,13 @@ class Table:
         '''
         self.__table_frame = ttk.Frame(frame); self.__table_frame.grid(row=0, column=0, sticky="N W E S")
         headers = data[0]
-        self.__draw_headers(headers)
+        self._draw_headers(headers)
 
         # Remove first element from data
         del data[0]
-        self.__draw_content(data)
+        self._draw_content(data)
 
-    def __draw_headers(self, headers: List[str]):
+    def _draw_headers(self, headers: List[str]):
         '''
         Draws the headers of the table.
         '''
@@ -34,7 +34,7 @@ class Table:
             label = ttk.Label(self.__table_frame, padding=5); label.grid(row=0, column=idx)
             label['text'] = header
 
-    def __draw_content(self, content: List[List[str]]):
+    def _draw_content(self, content: List[List[str]]):
 
         '''
         [

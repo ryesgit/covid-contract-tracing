@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 
+from functools import partial
+
 class ContactsForm:
     '''
     Top level window asking the user details for contact tracing.
@@ -25,5 +27,8 @@ class ContactsForm:
     def draw_form(self):
         from components.EntryTable import EntryTable
 
-        headers = [["Name", "Age", "Location"]]
+        # Create entry types of the table and define
+        # some of their arguments
+        entry_types = [Entry, partial(ttk.Spinbox, from_=0, to=100)]
+        headers = [["Name", "Age"], entry_types]
         EntryTable(self.__form_window, headers)
