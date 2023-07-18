@@ -42,4 +42,15 @@ class ContactsForm:
         
 
         headers = ["Name", "Age", "Address","Vaccination Status", "Have you been in contact\nwith someone diagnosed with COVID?"]
-        EntryTable(self.__form_window, headers, entry_types)
+        EntryTable(self.__form_window, headers, entry_types, on_submit=self.submit_form)
+
+    def submit_form(self, user_data):
+        from utils.user_data_helpers import convert_data_to_array
+        from ContactsIO import ContactsIO
+
+        user_data = user_data()
+        # Write the user data to the json file
+        ContactsIO("./contacts.json").write_user_data(user_data)
+
+        # Close the window
+        self.__form_window.destroy()

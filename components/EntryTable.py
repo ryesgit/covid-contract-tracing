@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from typing import List, Callable
 from components.Table import Table
+from functools import partial
 
 class EntryTable(Table):
     '''
@@ -14,7 +15,7 @@ class EntryTable(Table):
     data : List[dict]
         The data to display on the table.
     '''
-    def __init__(self, frame: Frame, headers: List[str], entry_types: List[Callable] | List[List[Callable]]):
+    def __init__(self, frame: Frame, headers: List[str], entry_types: List[Callable] | List[List[Callable]], on_submit: Callable = None):
 
         self.__entries = []
         self.__headers = headers
@@ -31,7 +32,7 @@ class EntryTable(Table):
         self._get_table_frame().grid_configure(padx=5, pady=5)
         
 
-        button = ttk.Button(self._get_table_frame(), text="Add Contact", command=self.consolidate_info)
+        button = ttk.Button(self._get_table_frame(), text="Add Contact", command=partial(on_submit, self.consolidate_info))
         button.grid(row=self._get_table_frame().grid_size()[1] + 1, column=0, columnspan=self._get_table_frame().grid_size()[0], sticky="W E")
 
     # Override the draw content method
@@ -101,11 +102,10 @@ class EntryTable(Table):
                 entry_values.append(entry.getvar(var_name))
                 continue
 
-
+            print(entry.get())
             entry_values.append(entry.get())
 
         # Turn the list of headers and list of entries to a key-value pair
         entry_values = dict(zip(self.__headers, entry_values))
-
         return entry_values
         
