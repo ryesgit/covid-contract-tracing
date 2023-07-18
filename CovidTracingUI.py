@@ -9,26 +9,30 @@ from utils.user_data_helpers import convert_data_to_array
 class UI:
     def __init__(self) -> None:
         self.__master = Tk()
+        self.__master.title("Contact Tracing App")
+        self.__master.columnconfigure(0, weight=1)
+        self.__master.rowconfigure(0, weight=1)
+
+        self.__master.minsize(250, 250)
+
         self.__frame = ttk.Frame(self.__master)
         self.__frame.grid(row=0, column=0, sticky="N W E S")
 
         headers = ["Name", "Age"]
 
-        # Initialize contacts delegator
-        contacts_delegator = ContactsIO('contacts.json')
-
-        user_data = contacts_delegator.get_user_data()
-        self.__display_user_data(user_data)
+        self.__display_user_data()
 
         add_contact_button = ttk.Button(self.__frame, text="Add Contact", command=self.show_form_window)
         add_contact_button.grid(row=self.__frame.grid_size()[1], column=0, columnspan=2, sticky="W E")
-
+        
         # Center the window
         center_window(self.__master)
 
+        self.__master.bind("<<NewUserCreate>>", lambda event: self.rerender_screen())
+
         self.__master.mainloop()
 
-    def __display_user_data(self, data: List[dict]):
+    def __display_user_data(self):
         '''
         Draws the user data on the UI.
 
@@ -37,6 +41,12 @@ class UI:
         data : List[dict]
             A list of dictionaries containing user data.
         '''
+        
+        for child in self.__frame.winfo_children():
+             child.destroy()
+
+        contacts_delegator = ContactsIO('contacts.json')
+        data = contacts_delegator.get_user_data()
         table = Table(self.__frame, data)
 
         # for idx, user in enumerate(data):
@@ -54,6 +64,12 @@ class UI:
 
         # Center this window
         center_window(contacts_form.get_window())
+
+    def rerender_screen(self):
+        print("Screen rerender")
+        self.__display_user_data()
+        add_contact_button = ttk.Button(self.__frame, text="Add Contact", command=self.show_form_window)
+        add_contact_button.grid(row=self.__frame.grid_size()[1], column=0, columnspan=2, sticky="W E")
 
 def center_window(window: Tk | Toplevel):
         '''

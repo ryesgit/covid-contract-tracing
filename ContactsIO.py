@@ -42,7 +42,7 @@ class ContactsIO:
 
         # Generate a unique id for the user
         id = str(uuid4())
-        
+
         self.__contacts[id] = user_data
         with open(self.__path, 'w') as file:
             json.dump(self.__contacts, file, indent=4)

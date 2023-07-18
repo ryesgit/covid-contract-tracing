@@ -14,6 +14,7 @@ class ContactsForm:
     '''
 
     def __init__(self, master: Tk) -> None:
+        self.__master = master
         self.__form_window = Toplevel(master)
         self.__form_window.title("Contact Tracing Form")
 
@@ -50,7 +51,8 @@ class ContactsForm:
 
         user_data = user_data()
         # Write the user data to the json file
-        ContactsIO("./contacts.json").write_user_data(user_data)
-
+        contacts_delegator = ContactsIO('contacts.json')
+        contacts_delegator.write_user_data(user_data)
         # Close the window
+        self.__master.event_generate("<<NewUserCreate>>")
         self.__form_window.destroy()
