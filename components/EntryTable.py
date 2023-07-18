@@ -45,6 +45,16 @@ class EntryTable(Table):
             entry_type: Entry | Scale | Spinbox
             entry_type = (self.__data[1])[row]
 
+            # If it is a list of entry types, iterate through each
+            if type(entry_type) == list:
+
+                entries_frame = ttk.Frame(self._get_table_frame())
+                entries_frame.grid(row=row, column=1, sticky="W E")
+
+                for idx, entry in enumerate(entry_type):
+                    entry = entry(entries_frame)
+                    entry.grid(row=idx, column=1, sticky="W E")
+                continue
             # Instantiate the passed entry type
             entry = entry_type(self._get_table_frame())
 

@@ -29,6 +29,16 @@ class ContactsForm:
 
         # Create entry types of the table and define
         # some of their arguments
-        entry_types = [Entry, partial(ttk.Spinbox, from_=0, to=100)]
-        headers = [["Name", "Age"], entry_types]
+
+        vaccination_statuses = ["None", "1st Dose", "2nd Dose", "1st Booster Shot", "2nd Booster Shot"]
+        vaccination_combobox = partial(ttk.Combobox, values=vaccination_statuses, state="readonly")
+
+        been_with_diagnosed = StringVar()
+        diagnosis_radiobuttons = [partial(ttk.Radiobutton, text="Yes", variable=been_with_diagnosed, value=True), \
+                                  partial(ttk.Radiobutton, variable=been_with_diagnosed, text="No", value=False)]
+
+        entry_types = [Entry, partial(ttk.Spinbox, from_=0, to=100), Entry, \
+                      vaccination_combobox, diagnosis_radiobuttons]
+        
+        headers = [["Name", "Age", "Address","Vaccination Status", "Have you been in contact\nwith someone diagnosed with COVID?"], entry_types]
         EntryTable(self.__form_window, headers)
