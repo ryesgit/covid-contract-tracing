@@ -16,7 +16,10 @@ class EntryTable(Table):
     '''
     def __init__(self, frame: Frame, headers: List[str], entry_types: List[Callable] | List[List[Callable]]):
 
+        self.__entries = []
+        self.__headers = headers
         super().__init__(frame, [headers, entry_types])
+
 
         for row in range(self._get_table_frame().grid_size()[1]):
             for column in range(self._get_table_frame().grid_size()[0]):
@@ -28,7 +31,7 @@ class EntryTable(Table):
         self._get_table_frame().grid_configure(padx=5, pady=5)
         
 
-        button = ttk.Button(self._get_table_frame(), text="Add Contact")
+        button = ttk.Button(self._get_table_frame(), text="Add Contact", command=self.consolidate_info)
         button.grid(row=self._get_table_frame().grid_size()[1] + 1, column=0, columnspan=self._get_table_frame().grid_size()[0], sticky="W E")
 
     # Override the draw content method
@@ -57,11 +60,18 @@ class EntryTable(Table):
                 for idx, entry in enumerate(entry_type):
 
                     entry = entry(entries_frame)
+
+                    # Add to entries list
+                    self.__entries.append(entry)
+
                     entry.grid(row=idx, column=1, sticky="W E")
                 continue
             # Instantiate the passed entry type
 
             entry = entry_type(self._get_table_frame())
+
+            # Add to entries list
+            self.__entries.append(entry)
 
             # Set entry's grid geometry
             entry.grid(row=row, column=1, sticky="W E")
@@ -71,10 +81,31 @@ class EntryTable(Table):
         '''
         Draws the headers of the table.
         '''
-        print(headers)
         for idx, header in enumerate(headers):
             label = ttk.Label(self._get_table_frame(), padding=5); label.grid(row=idx, column=0)
             label['text'] = header
 
         ttk.Separator(self._get_table_frame(), orient=VERTICAL).grid(row=0, column=0, rowspan=len(headers), sticky="E N S")
+
+    def consolidate_info(self):
+        '''
+        Consolidates the gathered from the entries of the table.
+        '''
+        entry_values = []
+
+        for entry in self.__entries:
+            if type(entry) == ttk.Radiobutton:
+                if type(entry["variable"]) == str:
+                    continue
+                var_name = entry.cget("variable")
+                entry_values.append(entry.getvar(var_name))
+                continue
+
+
+            entry_values.append(entry.get())
+
+        # Turn the list of headers and list of entries to a key-value pair
+        entry_values = dict(zip(self.__headers, entry_values))
+
+        return entry_values
         

@@ -33,7 +33,7 @@ class ContactsForm:
         vaccination_statuses = ["None", "1st Dose", "2nd Dose", "1st Booster Shot", "2nd Booster Shot"]
         vaccination_combobox = partial(ttk.Combobox, values=vaccination_statuses, state="readonly")
 
-        been_with_diagnosed = StringVar()
+        been_with_diagnosed = BooleanVar()
         diagnosis_radiobuttons = [partial(ttk.Radiobutton, text="Yes", variable=been_with_diagnosed, value=True), \
                                   partial(ttk.Radiobutton, variable=been_with_diagnosed, text="No", value=False)]
 
