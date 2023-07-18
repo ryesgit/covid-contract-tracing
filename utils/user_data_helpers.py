@@ -14,6 +14,10 @@ def convert_data_to_array(user_data: dict) -> list:
     user_data: list
         The user data in an array.
     '''
+
+    # If given file is empty, return nothing
+    if len(user_data) == 0:
+        return [[], []]
     number_of_headers = len(user_data[list(user_data.keys())[0]])
 
     list_of_headers = list(user_data[list(user_data.keys())[0]].keys())

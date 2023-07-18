@@ -19,9 +19,11 @@ class ContactsIO:
         '''
         Reads the json file and returns a list of dictionaries.
         '''
-        with open(self.__path, 'r') as file:
-            self.__contacts = json.load(file)
-
+        try:
+            with open(self.__path, 'r') as file:
+                self.__contacts = json.load(file)
+        except:
+            self.__contacts = {}
     def get_user_data(self):
         # Convert the data to an array first
         self.__contacts = convert_data_to_array(self.__contacts)
