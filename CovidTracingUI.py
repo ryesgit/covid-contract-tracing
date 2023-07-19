@@ -61,9 +61,10 @@ class UI:
         table_frame.configure(borderwidth=5, relief="sunken")
         canvas.create_window((0, 0), window=table_frame, anchor="nw", tags="table_frame")
         Table(table_frame, data)
+        canvas.configure(width=250)
         
         canvas.bind("<Configure>", lambda event: canvas.configure(scrollregion=canvas.bbox("all")))
-        
+        canvas.configure(scrollregion=canvas.bbox("all"))
 
 
         # Resize the canvas to fill 5 items from the frame

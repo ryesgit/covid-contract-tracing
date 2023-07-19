@@ -43,5 +43,12 @@
         "Address": "Cabiao",
         "Vaccination Status": "2nd Dose",
         "Have you been in contact\nwith someone diagnosed with COVID?": 0
+    },
+    "41d41b50-1960-4812-8506-f95aebb45bdb": {
+        "Name": "Bagong Tropa",
+        "Age": "12",
+        "Address": "assa",
+        "Vaccination Status": "1st Booster Shot",
+        "Have you been in contact\nwith someone diagnosed with COVID?": 0
     }
 }
