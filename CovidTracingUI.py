@@ -48,8 +48,6 @@ class UI:
         contacts_delegator = ContactsIO('contacts.json')
         data = contacts_delegator.get_user_data()
 
-
-        
         canvas = Canvas(self.__frame)
         canvas.grid(row=0, column=0, sticky="N W E S")
 
@@ -61,11 +59,14 @@ class UI:
         table_frame.configure(borderwidth=5, relief="sunken")
         canvas.create_window((0, 0), window=table_frame, anchor="nw", tags="table_frame")
         Table(table_frame, data)
-        canvas.configure(width=250)
-        
-        canvas.bind("<Configure>", lambda event: canvas.configure(scrollregion=canvas.bbox("all")))
-        canvas.configure(scrollregion=canvas.bbox("all"))
 
+        # Get the width of the table frame
+        width = get_widget_width(table_frame)
+
+        canvas.configure(width=width)
+        canvas.bind("<Configure>", lambda event: canvas.configure(scrollregion=canvas.bbox("all")))
+        canvas.bind("<<NewUserCreate>>", lambda event: canvas.configure(scrollregion=canvas.bbox("all")))
+        canvas.configure(scrollregion=canvas.bbox("all"))
 
         # Resize the canvas to fill 5 items from the frame
 
@@ -98,3 +99,8 @@ def center_window(window: Tk | Toplevel):
         x = (window.winfo_screenwidth() // 2) - (width // 2)
         y = (window.winfo_screenheight() // 2) - (height // 2)
         window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+
+def get_widget_width(widget):
+    widget.update_idletasks()
+
+    return widget.winfo_reqwidth()
