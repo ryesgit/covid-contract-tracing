@@ -20,15 +20,22 @@ class UI:
 
         self.__frame.configure(borderwidth=5, relief="sunken")
 
+        self.__canvas = []
         self.__display_user_data()
 
         add_contact_button = ttk.Button(self.__frame, text="Add Contact", command=self.show_form_window)
         add_contact_button.grid(row=self.__frame.grid_size()[1], column=0, columnspan=2, sticky="W E")
 
+        
+        search_contact_button = ttk.Button(self.__frame, text="Search Contact")
+        search_contact_button.grid(row=self.__frame.grid_size()[1], column=0, columnspan=2, sticky="W E")
+
+
         # Center the window
         center_window(self.__master)
 
-        self.__master.bind("<<NewUserCreate>>", lambda event: self.rerender_screen())
+        # Rerender canvas every time new user is created
+        self.__master.bind("<<NewUserCreate>>", lambda event: self.__display_user_data)
 
         self.__master.mainloop()
 
@@ -41,15 +48,18 @@ class UI:
         data : List[dict]
             A list of dictionaries containing user data.
         '''
-        
-        for child in self.__frame.winfo_children():
-             child.destroy()
+        print(self.__canvas)
+        # Clear canvas first
+        if self.__canvas:
+            self.__canvas.destroy()
 
         contacts_delegator = ContactsIO('contacts.json')
         data = contacts_delegator.get_user_data()
 
         canvas = Canvas(self.__frame)
         canvas.grid(row=0, column=0, sticky="N W E S")
+
+        self.__canvas = canvas
 
         scrollbar = Scrollbar(self.__frame, orient="vertical", command=canvas.yview)
         scrollbar.grid(row=0, column=1, sticky="N S E")
@@ -79,12 +89,6 @@ class UI:
 
         # Center this window
         center_window(contacts_form.get_window())
-
-    def rerender_screen(self):
-        print("Screen rerender")
-        self.__display_user_data()
-        add_contact_button = ttk.Button(self.__frame, text="Add Contact", command=self.show_form_window)
-        add_contact_button.grid(row=self.__frame.grid_size()[1], column=0, columnspan=2, sticky="W E")
 
 def center_window(window: Tk | Toplevel):
         '''

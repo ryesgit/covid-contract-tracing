@@ -99,8 +99,16 @@ class EntryTable(Table):
                 if type(entry["variable"]) == str:
                     continue
                 var_name = entry.cget("variable")
-                entry_values.append(entry.getvar(var_name))
-                continue
+
+                radio_button_value = entry.getvar(var_name)
+
+                if radio_button_value == 0:
+                    entry_values.append("No")
+                    continue
+
+                else:
+                    entry_values.append("Yes")
+                    continue
 
             print(entry.get())
             entry_values.append(entry.get())
