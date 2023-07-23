@@ -16,6 +16,7 @@ class UI:
         self.__master.title("Contact Tracing App")
         self.__master.columnconfigure(0, weight=1)
         self.__master.rowconfigure(0, weight=1)
+        self.__master.minsize(250, 250)
 
         self.__frame = ttk.Frame(self.__master)
         self.__frame.grid(row=0, column=0, sticky="N W E S")
