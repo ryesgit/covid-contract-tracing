@@ -32,7 +32,7 @@ class EntryTable(Table):
         self._get_table_frame().grid_configure(padx=5, pady=5)
         
 
-        button = ttk.Button(self._get_table_frame(), text="Submit", command=partial(on_submit, self.consolidate_info))
+        button = ttk.Button(self._get_table_frame(), text="Submit", command=lambda: on_submit(self.consolidate_info()))
         button.grid(row=self._get_table_frame().grid_size()[1] + 1, column=0, columnspan=self._get_table_frame().grid_size()[0], sticky="W E")
 
     # Override the draw content method
@@ -95,25 +95,34 @@ class EntryTable(Table):
         entry_values = []
 
         for entry in self.__entries:
+
             if type(entry) == ttk.Radiobutton:
-                if type(entry["variable"]) == str:
+                try:
+                    radio_value = entry.getvar(entry.cget("variable"))
+                    entry_values.append("Yes" if radio_value == 1 else "No")
+                except:
+                    print("Radiobutton value not selected")
+                    entry_values.append("")
+                finally:
                     continue
-                var_name = entry.cget("variable")
+            #     if type(entry["variable"]) == str:
+            #         continue
+            #     var_name = entry.cget("variable")
 
-                radio_button_value = entry.getvar(var_name)
+            #     radio_button_value = entry.getvar(var_name)
 
-                if radio_button_value == 0:
-                    entry_values.append("No")
-                    continue
+            #     if radio_button_value == 0:
+            #         entry_values.append("No")
+            #         continue
 
-                else:
-                    entry_values.append("Yes")
-                    continue
+            #     else:
+            #         entry_values.append("Yes")
+            #         continue
 
-            print(entry.get())
             entry_values.append(entry.get())
 
         # Turn the list of headers and list of entries to a key-value pair
         entry_values = dict(zip(self.__headers, entry_values))
+        print(entry_values)
         return entry_values
         
