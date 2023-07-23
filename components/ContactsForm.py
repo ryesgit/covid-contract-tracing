@@ -49,7 +49,6 @@ class ContactsForm:
         from utils.user_data_helpers import convert_data_to_array
         from ContactsIO import ContactsIO
 
-        user_data = user_data()
         # Write the user data to the json file
         contacts_delegator = ContactsIO('contacts.json')
         contacts_delegator.write_user_data(user_data)
