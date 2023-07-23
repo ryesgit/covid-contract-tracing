@@ -8,6 +8,9 @@ from utils.user_data_helpers import convert_data_to_array
 
 class UI:
     def __init__(self) -> None:
+        # Initialize contactsIO instance to talk to the contacts repository
+        self.__contacts_delegator = ContactsIO('contacts.json')
+        
         self.__master = Tk()
         self.__master.title("Contact Tracing App")
         self.__master.columnconfigure(0, weight=1)
@@ -37,6 +40,7 @@ class UI:
         # Rerender canvas every time new user is created
         self.__master.bind("<<NewUserCreate>>", lambda event: self.__display_user_data())
 
+
         self.__master.mainloop()
 
     def __display_user_data(self):
@@ -53,8 +57,7 @@ class UI:
         if self.__canvas:
             self.__canvas.destroy()
 
-        contacts_delegator = ContactsIO('contacts.json')
-        self.__contacts = contacts_delegator.get_user_data()
+        self.__contacts = self.__contacts_delegator.get_user_data()
 
         canvas = Canvas(self.__frame)
         canvas.grid(row=0, column=0, sticky="N W E S")
@@ -94,7 +97,7 @@ class UI:
         '''
         from components.SearchContactsForm import SearchContactsForm
 
-        search_contacts_form = SearchContactsForm(self.__master, self.__contacts)
+        search_contacts_form = SearchContactsForm(self.__master, self.__contacts_delegator)
 
          # Center this window
         center_window(search_contacts_form.get_window())

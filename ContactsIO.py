@@ -28,8 +28,23 @@ class ContactsIO:
     def get_user_data(self):
         # Convert the data to an array first
         self.__contacts = convert_data_to_array(self.__contacts)
+        self.__headers = self.__contacts[0]
         return self.__contacts
+    
+    def get_users_by_category(self, options: dict):
+        print(f"options: {options}")
+        print(f"Category: {options['Category']}")
+        contacts = []
+        for contact in self.__contacts:
 
+            property_index = self.__headers.index(options['Category'])
+
+            if contact[property_index] == options['Value']:
+                contacts.append(contact)
+
+        print(contacts)
+        return contacts
+    
     def write_user_data(self, user_data: dict):
         '''
         Writes the user data to the json file.

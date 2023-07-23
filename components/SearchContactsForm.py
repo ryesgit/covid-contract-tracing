@@ -2,6 +2,7 @@ from typing import List
 from tkinter import *
 from tkinter import ttk
 from functools import partial
+from ContactsIO import ContactsIO
 
 class SearchContactsForm:
     '''
@@ -19,7 +20,7 @@ class SearchContactsForm:
     render_canvas(contacts: List[dict]) -> None
         Renders the canvas with the searched contacts
     '''
-    def __init__(self, master, contacts: List[dict]) -> None:
+    def __init__(self, master, contacts_delegator: ContactsIO) -> None:
         '''
         Parameters
         ----------
@@ -27,9 +28,11 @@ class SearchContactsForm:
             This form's master widget
         contacts : List[dict]
             A list of dictionaries containing contacts data.
+        contacts_delegator : ContactsIO
+            The instance that talks to the contacts repository
         '''
         self.__master = master
-        self.__contacts = contacts
+        self.__contacts_delegator = contacts_delegator
 
         # Create the search contact form widget
         self.__form_window = Toplevel(master)
@@ -38,6 +41,8 @@ class SearchContactsForm:
         title = ttk.Label(self.__form_window, text="Search Contacts Form", padding=5)
         title.grid(row=0, column=0, columnspan=2)
 
+
+        self.__contacts = self.__contacts_delegator.get_user_data()
         self.__draw_form()
 
     def __draw_form(self):
@@ -49,7 +54,7 @@ class SearchContactsForm:
         if self.__contacts:
             # Set first contact's categories as default categories
             categories = []
-            print(self.__contacts)
+
             for key in self.__contacts[0]:
                 categories.append(key)
 
@@ -80,18 +85,7 @@ class SearchContactsForm:
         List[dict]
             A list of contacts that match the category
         '''
-        print(f"options: {options}")
-        print(f"Category: {options['Category']}")
-        contacts = []
-        for contact in self.__contacts:
-
-            property_index = self.__headers.index(options['Category'])
-
-            if contact[property_index] == options['Value']:
-                contacts.append(contact)
-
-        print(contacts)
-        return contacts
+        return self.__contacts_delegator.get_users_by_category(options)
     
 
     def get_window(self):
