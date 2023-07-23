@@ -31,7 +31,8 @@ class Table:
         Draws the headers of the table.
         '''
         for idx, header in enumerate(headers):
-            label = ttk.Label(self.__table_frame, padding=5); label.grid(row=0, column=idx)
+            label = ttk.Label(self.__table_frame, padding=5); label.grid(row=0, column=idx, sticky="N E W S")
+            label.configure(borderwidth=2, font="bold", relief="solid", anchor="center")
             label['text'] = header
 
     def _draw_content(self, content: List[List[str]]):
