@@ -69,6 +69,8 @@ class UI:
         scrollbar.grid(row=0, column=1, sticky="N S E")
         canvas.configure(yscrollcommand=scrollbar.set)
 
+        self.__master.geometry("")
+
         table_frame = ttk.Frame(canvas)
         table_frame.configure(borderwidth=5, relief="sunken")
         canvas.create_window((0, 0), window=table_frame, anchor="nw", tags="table_frame")
@@ -79,6 +81,8 @@ class UI:
 
         canvas.configure(width=width)
         canvas.configure(scrollregion=canvas.bbox("all"))
+
+        center_window(self.__master)
 
 
     def show_add_contact_form(self):
