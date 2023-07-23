@@ -54,7 +54,6 @@ class UI:
         data : List[dict]
             A list of dictionaries containing user data.
         '''
-        print(self.__canvas)
         # Clear canvas first
         if self.__canvas:
             self.__canvas.destroy()

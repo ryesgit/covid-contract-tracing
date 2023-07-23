@@ -123,6 +123,6 @@ class EntryTable(Table):
 
         # Turn the list of headers and list of entries to a key-value pair
         entry_values = dict(zip(self.__headers, entry_values))
-        print(entry_values)
+
         return entry_values
         

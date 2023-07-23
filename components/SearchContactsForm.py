@@ -79,7 +79,7 @@ class SearchContactsForm:
             EntryTable(self.__form_window, ["Category", "Value"], [combobox, ttk.Entry], on_submit=display_searched_entries)
 
 
-    def search_by_category(self, options) -> List[dict]:
+    def search_by_category(self, options:dict) -> List[dict]:
         '''
         Searches for contacts by category
         and returns a list of contacts
@@ -87,8 +87,6 @@ class SearchContactsForm:
 
         Parameters
         ----------
-        category : str
-            The category to search for
         options : dict
             Options to search for.
             Includes 'Category' and 'Value' properties

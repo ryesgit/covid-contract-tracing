@@ -37,8 +37,6 @@ class ContactsIO:
         return contacts
     
     def get_users_by_category(self, options: dict):
-        print(f"options: {options}")
-        print(f"Category: {options['Category']}")
         contacts = []
         for contact in self.__only_contacts:
 
