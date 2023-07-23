@@ -32,7 +32,7 @@ class EntryTable(Table):
         self._get_table_frame().grid_configure(padx=5, pady=5)
         
 
-        button = ttk.Button(self._get_table_frame(), text="Add Contact", command=partial(on_submit, self.consolidate_info))
+        button = ttk.Button(self._get_table_frame(), text="Submit", command=partial(on_submit, self.consolidate_info))
         button.grid(row=self._get_table_frame().grid_size()[1] + 1, column=0, columnspan=self._get_table_frame().grid_size()[0], sticky="W E")
 
     # Override the draw content method
