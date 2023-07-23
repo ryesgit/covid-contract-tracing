@@ -23,11 +23,11 @@ class UI:
         self.__canvas = []
         self.__display_user_data()
 
-        add_contact_button = ttk.Button(self.__frame, text="Add Contact", command=self.show_form_window)
+        add_contact_button = ttk.Button(self.__frame, text="Add Contact", command=self.show_add_contact_form)
         add_contact_button.grid(row=self.__frame.grid_size()[1], column=0, columnspan=2, sticky="W E")
 
         
-        search_contact_button = ttk.Button(self.__frame, text="Search Contact")
+        search_contact_button = ttk.Button(self.__frame, text="Search Contact", command=self.show_search_contact_form)
         search_contact_button.grid(row=self.__frame.grid_size()[1], column=0, columnspan=2, sticky="W E")
 
 
@@ -54,7 +54,7 @@ class UI:
             self.__canvas.destroy()
 
         contacts_delegator = ContactsIO('contacts.json')
-        data = contacts_delegator.get_user_data()
+        self.__contacts = contacts_delegator.get_user_data()
 
         canvas = Canvas(self.__frame)
         canvas.grid(row=0, column=0, sticky="N W E S")
@@ -68,7 +68,7 @@ class UI:
         table_frame = ttk.Frame(canvas)
         table_frame.configure(borderwidth=5, relief="sunken")
         canvas.create_window((0, 0), window=table_frame, anchor="nw", tags="table_frame")
-        Table(table_frame, data)
+        Table(table_frame, self.__contacts)
 
         # Get the width of the table frame
         width = get_widget_width(table_frame)
@@ -80,7 +80,7 @@ class UI:
 
         # Resize the canvas to fill 5 items from the frame
 
-    def show_form_window(self):
+    def show_add_contact_form(self):
         '''
         Create a new window for the contact tracing form.
         '''
@@ -89,6 +89,17 @@ class UI:
 
         # Center this window
         center_window(contacts_form.get_window())
+
+    def show_search_contact_form(self):
+        '''
+        Creates a new window for the search contact form.
+        '''
+        from components.SearchContactsForm import SearchContactsForm
+
+        search_contacts_form = SearchContactsForm(self.__master, self.__contacts)
+
+         # Center this window
+        center_window(search_contacts_form.get_window())
 
 def center_window(window: Tk | Toplevel):
         '''
