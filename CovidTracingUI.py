@@ -80,14 +80,13 @@ class UI:
         canvas.configure(width=width)
         canvas.configure(scrollregion=canvas.bbox("all"))
 
-        # Resize the canvas to fill 5 items from the frame
 
     def show_add_contact_form(self):
         '''
         Create a new window for the contact tracing form.
         '''
         from components.ContactsForm import ContactsForm
-        contacts_form = ContactsForm(self.__master)
+        contacts_form = ContactsForm(self.__master, self.__contacts_delegator)
 
         # Center this window
         center_window(contacts_form.get_window())

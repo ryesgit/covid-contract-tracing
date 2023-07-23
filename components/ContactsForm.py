@@ -1,3 +1,4 @@
+from ContactsIO import ContactsIO
 from tkinter import *
 from tkinter import ttk
 
@@ -13,7 +14,10 @@ class ContactsForm:
         The parent window of this window.
     '''
 
-    def __init__(self, master: Tk) -> None:
+    def __init__(self, master: Tk, contacts_delegator: ContactsIO) -> None:
+
+        self.__contacts_delegator = contacts_delegator
+
         self.__master = master
         self.__form_window = Toplevel(master)
         self.__form_window.title("Contact Tracing Form")
@@ -46,12 +50,9 @@ class ContactsForm:
         EntryTable(self.__form_window, headers, entry_types, on_submit=self.submit_form)
 
     def submit_form(self, user_data):
-        from utils.user_data_helpers import convert_data_to_array
-        from ContactsIO import ContactsIO
 
         # Write the user data to the json file
-        contacts_delegator = ContactsIO('contacts.json')
-        contacts_delegator.write_user_data(user_data)
+        self.__contacts_delegator.write_user_data(user_data)
         # Close the window
         self.__master.event_generate("<<NewUserCreate>>")
         self.__form_window.destroy()
