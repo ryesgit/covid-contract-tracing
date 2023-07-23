@@ -5,12 +5,13 @@ from typing import List
 from ContactsIO import ContactsIO
 from components.Table import Table
 from utils.user_data_helpers import convert_data_to_array
+from utils.gui_helpers import center_window, get_widget_width
 
 class UI:
     def __init__(self) -> None:
         # Initialize contactsIO instance to talk to the contacts repository
         self.__contacts_delegator = ContactsIO('contacts.json')
-        
+
         self.__master = Tk()
         self.__master.title("Contact Tracing App")
         self.__master.columnconfigure(0, weight=1)
@@ -101,22 +102,3 @@ class UI:
 
          # Center this window
         center_window(search_contacts_form.get_window())
-
-def center_window(window: Tk | Toplevel):
-        '''
-        Parameters
-        ----------
-        window : Tk | Toplevel
-            The window to center.
-        '''
-        window.update_idletasks()
-        width = window.winfo_width()
-        height = window.winfo_height()
-        x = (window.winfo_screenwidth() // 2) - (width // 2)
-        y = (window.winfo_screenheight() // 2) - (height // 2)
-        window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
-
-def get_widget_width(widget):
-    widget.update_idletasks()
-
-    return widget.winfo_reqwidth()
