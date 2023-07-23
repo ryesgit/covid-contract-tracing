@@ -13,7 +13,7 @@ class ContactsIO:
     '''
     def __init__(self, path: str):
         self.__path = path
-        self.__contacts = None
+        self.__contacts = {}
         self.__read_json()
 
     def __read_json(self):
@@ -27,22 +27,27 @@ class ContactsIO:
             self.__contacts = {}
     def get_user_data(self):
         # Convert the data to an array first
-        self.__contacts = convert_data_to_array(self.__contacts)
-        self.__headers = self.__contacts[0]
-        return self.__contacts
+        contacts = convert_data_to_array(self.__contacts)
+        self.__headers = contacts[0]
+
+        contacts_copy = contacts.copy()
+        del contacts_copy[0]
+        self.__only_contacts = contacts_copy
+
+        return contacts
     
     def get_users_by_category(self, options: dict):
         print(f"options: {options}")
         print(f"Category: {options['Category']}")
         contacts = []
-        for contact in self.__contacts:
+        for contact in self.__only_contacts:
 
             property_index = self.__headers.index(options['Category'])
 
             if contact[property_index] == options['Value']:
                 contacts.append(contact)
 
-        print(contacts)
+        contacts.insert(0, self.__headers)
         return contacts
     
     def write_user_data(self, user_data: dict):
@@ -61,3 +66,6 @@ class ContactsIO:
         self.__contacts[id] = user_data
         with open(self.__path, 'w') as file:
             json.dump(self.__contacts, file, indent=4)
+
+        # Trigger reread when something is added to JSON
+        self.__read_json()
