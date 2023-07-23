@@ -11,7 +11,7 @@ class SearchContactsForm:
 
     Methods
     -------
-    search_by_category(category: str) -> List[dict]
+    search_by_category(category: str, options: dict) -> List[dict]
         Searches for contacts by category
         and retunts a list of contacts
         that match the category
@@ -59,7 +59,40 @@ class SearchContactsForm:
             combobox = partial(ttk.Combobox, values=categories, state="readonly")
 
 
-            EntryTable(self.__form_window, ["Search by Category", "Value"], [combobox, ttk.Entry], on_submit=lambda e: self.render_canvas(self.search_by_category(e[0], e[1])))
+            EntryTable(self.__form_window, ["Category", "Value"], [combobox, ttk.Entry], on_submit=self.search_by_category)
+
+    def search_by_category(self, options) -> List[dict]:
+        '''
+        Searches for contacts by category
+        and returns a list of contacts
+        that match the category
+
+        Parameters
+        ----------
+        category : str
+            The category to search for
+        options : dict
+            Options to search for.
+            Includes 'Category' and 'Value' properties
+
+        Returns
+        -------
+        List[dict]
+            A list of contacts that match the category
+        '''
+        print(f"options: {options}")
+        print(f"Category: {options['Category']}")
+        contacts = []
+        for contact in self.__contacts:
+
+            property_index = self.__headers.index(options['Category'])
+
+            if contact[property_index] == options['Value']:
+                contacts.append(contact)
+
+        print(contacts)
+        return contacts
+    
 
     def get_window(self):
         return self.__form_window
