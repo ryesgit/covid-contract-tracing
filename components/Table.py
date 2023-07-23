@@ -45,7 +45,12 @@ class Table:
         '''
         for row, row_value in enumerate(content):
             for column, column_value in enumerate(row_value):
-                label = ttk.Label(self.__table_frame, padding=5, anchor=CENTER); label.grid(row=row+1, column=column)
+
+                color = "blue" if row % 2 == 0 else "white"
+                text_color = "white" if row % 2 == 0 else "black"
+
+                label = ttk.Label(self.__table_frame, background=color, foreground=text_color, padding=5, anchor=CENTER); label.grid(row=row+1, column=column, sticky="W E")
+                label.configure(borderwidth=2, relief="solid")
                 label["text"] = column_value
                 label.configure(anchor="center")
 
