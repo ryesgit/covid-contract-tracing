@@ -68,7 +68,7 @@ class UI:
         table_frame = ttk.Frame(canvas)
         table_frame.configure(borderwidth=5, relief="sunken")
         canvas.create_window((0, 0), window=table_frame, anchor="nw", tags="table_frame")
-        Table(table_frame, self.__contacts)
+        Table(table_frame, self.__contacts.copy())
 
         # Get the width of the table frame
         width = get_widget_width(table_frame)
