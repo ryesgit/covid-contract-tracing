@@ -35,7 +35,7 @@ class UI:
         center_window(self.__master)
 
         # Rerender canvas every time new user is created
-        self.__master.bind("<<NewUserCreate>>", lambda event: self.__display_user_data)
+        self.__master.bind("<<NewUserCreate>>", lambda event: self.__display_user_data())
 
         self.__master.mainloop()
 
@@ -74,8 +74,6 @@ class UI:
         width = get_widget_width(table_frame)
 
         canvas.configure(width=width)
-        canvas.bind("<Configure>", lambda event: canvas.configure(scrollregion=canvas.bbox("all")))
-        canvas.bind("<<NewUserCreate>>", lambda event: canvas.configure(scrollregion=canvas.bbox("all")))
         canvas.configure(scrollregion=canvas.bbox("all"))
 
         # Resize the canvas to fill 5 items from the frame
