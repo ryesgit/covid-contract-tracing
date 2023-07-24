@@ -61,13 +61,14 @@ class ContactsForm:
                 messagebox.showerror("Error", "All fields must be filled.")
                 return
 
-        been_with_diagnosed = user_data["Have you been in contact\nwith someone diagnosed with COVID?"]
+        been_with_diagnosed_key = "Have you been in contact\nwith someone diagnosed with COVID?"
+        been_with_diagnosed = user_data[been_with_diagnosed_key]
         # If been_with_diagnosed is False, do not include the date
         if been_with_diagnosed == 0:
             user_data["If yes, when?"] = ""
-            been_with_diagnosed = "No"
+            user_data[been_with_diagnosed_key] = "No"
         else:
-            been_with_diagnosed = "Yes"
+            user_data[been_with_diagnosed_key] = "Yes"
         print(user_data)
         # Write the user data to the json file
         self.__contacts_delegator.write_user_data(user_data)
