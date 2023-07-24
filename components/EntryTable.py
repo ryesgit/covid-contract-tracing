@@ -110,7 +110,7 @@ class EntryTable(Table):
                     checked_radio_variables.append(radio_variable)
 
                     radio_value = entry.getvar(entry.cget("variable"))
-                    entry_values.append("Yes" if radio_value == 1 else "No")
+                    entry_values.append(radio_value)
                 except:
                     entry_values.append("")
                     print("Radiobutton value not selected")
