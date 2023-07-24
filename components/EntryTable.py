@@ -103,10 +103,8 @@ class EntryTable(Table):
                     continue
 
                 try:
-                    print(f"radio variables: {checked_radio_variables}")
                     
                     radio_variable = str(entry.cget("variable"))
-                    print(f"Appending radio button variable name {radio_variable}...")
                     checked_radio_variables.append(radio_variable)
 
                     radio_value = entry.getvar(entry.cget("variable"))
@@ -131,8 +129,6 @@ class EntryTable(Table):
             #         continue
 
             entry_values.append(entry.get())
-
-            print(entry_values)
 
         # Turn the list of headers and list of entries to a key-value pair
         entry_values = dict(zip(self.__headers, entry_values))

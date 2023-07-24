@@ -33,7 +33,6 @@ def convert_data_to_array(user_data: dict) -> list:
     list_of_records = list(user_data.keys())
 
     number_of_headers = len(list_of_headers)
-    print(number_of_headers)
 
     converted_data = []
 

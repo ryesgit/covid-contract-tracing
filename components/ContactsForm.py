@@ -69,7 +69,7 @@ class ContactsForm:
             user_data[been_with_diagnosed_key] = "No"
         else:
             user_data[been_with_diagnosed_key] = "Yes"
-        print(user_data)
+
         # Write the user data to the json file
         self.__contacts_delegator.write_user_data(user_data)
         # Close the window
