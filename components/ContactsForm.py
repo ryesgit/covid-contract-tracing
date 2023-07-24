@@ -1,5 +1,6 @@
 from ContactsIO import ContactsIO
 from tkinter import *
+from tkinter import messagebox
 from tkinter import ttk
 from tkcalendar import DateEntry
 
@@ -52,6 +53,13 @@ class ContactsForm:
         EntryTable(self.__form_window, headers, entry_types, on_submit=self.submit_form)
 
     def submit_form(self, user_data):
+
+        # If any user data is empty, do not write to the json file
+        # Also, display alert that all fields must be filled
+        for key in user_data:
+            if user_data[key] == "":
+                messagebox.showerror("Error", "All fields must be filled.")
+                return
 
         been_with_diagnosed = user_data["Have you been in contact\nwith someone diagnosed with COVID?"]
         # If been_with_diagnosed is False, do not include the date
