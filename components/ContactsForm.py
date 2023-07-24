@@ -42,11 +42,11 @@ class ContactsForm:
         diagnosis_radiobuttons = [partial(ttk.Radiobutton, text="Yes", variable=been_with_diagnosed, value=True), \
                                   partial(ttk.Radiobutton, variable=been_with_diagnosed, text="No", value=False)]
 
-        entry_types = [Entry, partial(ttk.Spinbox, from_=0, to=100), Entry, \
+        entry_types = [Entry, partial(ttk.Spinbox, from_=0, to=100), Entry, Entry, \
                       vaccination_combobox, diagnosis_radiobuttons]
         
 
-        headers = ["Name", "Age", "Address","Vaccination Status", "Have you been in contact\nwith someone diagnosed with COVID?"]
+        headers = ["Name", "Age", "Address", "Email Address","Vaccination Status", "Have you been in contact\nwith someone diagnosed with COVID?"]
         EntryTable(self.__form_window, headers, entry_types, on_submit=self.submit_form)
 
     def submit_form(self, user_data):
