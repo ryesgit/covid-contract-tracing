@@ -1,6 +1,7 @@
 from ContactsIO import ContactsIO
 from tkinter import *
 from tkinter import ttk
+from tkcalendar import DateEntry
 
 from functools import partial
 
@@ -43,14 +44,15 @@ class ContactsForm:
                                   partial(ttk.Radiobutton, variable=been_with_diagnosed, text="No", value=False)]
 
         entry_types = [Entry, partial(ttk.Spinbox, from_=0, to=100), Entry, Entry, \
-                      vaccination_combobox, diagnosis_radiobuttons]
+                      vaccination_combobox, diagnosis_radiobuttons, DateEntry]
         
 
-        headers = ["Name", "Age", "Address", "Email Address","Vaccination Status", "Have you been in contact\nwith someone diagnosed with COVID?"]
+        headers = ["Name", "Age", "Address", "Email Address","Vaccination Status", "Have you been in contact\nwith someone diagnosed with COVID?", \
+                   "If yes, when?"]
         EntryTable(self.__form_window, headers, entry_types, on_submit=self.submit_form)
 
     def submit_form(self, user_data):
-
+        print(user_data)
         # Write the user data to the json file
         self.__contacts_delegator.write_user_data(user_data)
         # Close the window
