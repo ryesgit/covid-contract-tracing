@@ -52,6 +52,14 @@ class ContactsForm:
         EntryTable(self.__form_window, headers, entry_types, on_submit=self.submit_form)
 
     def submit_form(self, user_data):
+
+        been_with_diagnosed = user_data["Have you been in contact\nwith someone diagnosed with COVID?"]
+        # If been_with_diagnosed is False, do not include the date
+        if been_with_diagnosed == 0:
+            user_data["If yes, when?"] = ""
+            been_with_diagnosed = "No"
+        else:
+            been_with_diagnosed = "Yes"
         print(user_data)
         # Write the user data to the json file
         self.__contacts_delegator.write_user_data(user_data)
