@@ -21,18 +21,25 @@ def convert_data_to_array(user_data: dict) -> list:
 
     if type(user_data) == list:
         return user_data
+    
+    user_with_most_headers = user_data[list(user_data.keys())[0]]
 
-    number_of_headers = len(user_data[list(user_data.keys())[0]])
+    # Iterate through the users and get the user with the most number of headers
+    for user in user_data:
+        if len(user_data[user]) > len(user_with_most_headers):
+            user_with_most_headers = user_data[user]
 
-    list_of_headers = list(user_data[list(user_data.keys())[0]].keys())
+    list_of_headers = list(user_with_most_headers.keys())
     list_of_records = list(user_data.keys())
+
+    number_of_headers = len(list_of_headers)
+    print(number_of_headers)
 
     converted_data = []
 
     headers = []
     for header in range(number_of_headers):
-        first_dict_key = list(user_data.keys())[0]
-        header_value = list(user_data[first_dict_key].keys())[header]
+        header_value = list(user_with_most_headers.keys())[header]
         headers.append(header_value)
     converted_data.append(headers)
     for record in list_of_records:
