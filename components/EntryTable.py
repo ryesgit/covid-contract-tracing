@@ -94,15 +94,26 @@ class EntryTable(Table):
         '''
         entry_values = []
 
+        checked_radio_variables = []
         for entry in self.__entries:
 
             if type(entry) == ttk.Radiobutton:
+                # If we have already checked the radio buttons value, skip
+                if str(entry.cget("variable")) in checked_radio_variables:
+                    continue
+
                 try:
+                    print(f"radio variables: {checked_radio_variables}")
+                    
+                    radio_variable = str(entry.cget("variable"))
+                    print(f"Appending radio button variable name {radio_variable}...")
+                    checked_radio_variables.append(radio_variable)
+
                     radio_value = entry.getvar(entry.cget("variable"))
                     entry_values.append("Yes" if radio_value == 1 else "No")
                 except:
-                    print("Radiobutton value not selected")
                     entry_values.append("")
+                    print("Radiobutton value not selected")
                 finally:
                     continue
             #     if type(entry["variable"]) == str:
@@ -120,6 +131,8 @@ class EntryTable(Table):
             #         continue
 
             entry_values.append(entry.get())
+
+            print(entry_values)
 
         # Turn the list of headers and list of entries to a key-value pair
         entry_values = dict(zip(self.__headers, entry_values))
